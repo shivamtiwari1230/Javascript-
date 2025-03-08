@@ -6,15 +6,17 @@
 
 
 
-.padding-tb {
-    padding: 40px 0px;
-}
+/* .padding-tb {
+    padding: 30px 0px;
+
+} */
 
 .wrap h1 {
     text-align: center;
     font-weight: 700;
     font-size: 32px;
 }
+
 .wrap p {
     text-align: center;
 }
@@ -27,14 +29,20 @@
     border-radius: 4px;
 }
 
-@media (max-width: 767px){
+@media (max-width: 767px) {
     .background {
         padding: 30px 20px;
-        margin: 20px 0 0 0;
+        /* margin: 20px 0 0 0; */
     }
 
+
+    /* .padding-tb {
+        padding: 10px 0px;
+    } */
+
+
 }
-    
+
 .text-area .input {
     display: flex;
     flex-direction: column;
@@ -54,7 +62,8 @@
     background-color: #007bff;
     color: white;
 }
-#button:hover{
+
+#button:hover {
     background-color: white;
     outline: 1px solid #007bff;
     color: black;
@@ -90,18 +99,58 @@ textarea:focus {
     border: none;
 }
 
-.input-star{
+.input-star {
     padding: 10px 0;
 }
 
 
-.fa-regular{
+.fa-regular {
     font-size: 28px;
     padding: 8px;
     cursor: pointer;
 }
 
-.text{
-text-align: left !important;
-margin-bottom: 6px !important;
+.text {
+    text-align: left !important;
+    margin-bottom: 6px !important;
 }
+
+.review-box {
+    background: #fff;
+    padding: 15px;
+    border-radius: 8px;
+    box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.1);
+    margin-bottom: 15px;
+}
+
+
+.review-time {
+    text-align: left !important;
+}
+
+
+.input-star i {
+    font-size: 24px;
+    cursor: pointer;
+    transition: color 0.3s ease-in-out, transform 0.2s;
+}
+
+.input-star i:hover {
+    color: gold;
+    transform: scale(1.2);
+}
+
+.review-time {
+    font-size: 12px;
+    color: #666;
+    margin-top: 5px;
+}
+
+/* .shadow{
+    background: #fff;
+    box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.1);
+    padding: 15px 20px;
+    border-radius: 8px;
+
+
+} */

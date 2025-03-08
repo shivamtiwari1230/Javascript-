@@ -16,36 +16,40 @@
         <div class="row">
             <div class="col-md-6 wrap">
                 <div class="background">
+                    
                     <h1 class="align-center">Share Your Experience</h1>
                     <p>Please rate your experience and leave a review. Your feedback helps us improve.
                     </p>
-                    <div class="review-form">
-                        <form action="#">
-                            <div class="text-area">
-                                <div class="input">
-                                    <label for="Name">Your Name</label>
-                                    <input type="text" id="name" placeholder="Enter Your Name" required>
-                                </div>
+                    <div class="shad">
+                        <div class="review-form">
+                            <form action="#">
+                                <div class="text-area">
+                                    <div class="input">
+                                        <label for="Name">Your Name</label>
+                                        <input type="text" id="name" placeholder="Enter Your Name" required>
+                                    </div>
 
-                                <div class="input">
-                                    <label for="Name">Write Your Review</label>
-                                    <textarea name="name" id="Reviews" required></textarea>
-                                </div>
+                                    <div class="input">
+                                        <label for="Name">Write Your Review</label>
+                                        <textarea name="name" id="Reviews" required></textarea>
+                                    </div>
 
-                                <div class="input-star">
-                                    <i class="fa-regular fa-star"></i>
-                                    <i class="fa-regular fa-star"></i>
-                                    <i class="fa-regular fa-star"></i>
-                                    <i class="fa-regular fa-star"></i>
-                                    <i class="fa-regular fa-star"></i>
-                                </div>
+                                    <div class="input-star">
+                                        <i class="fa-regular fa-star"></i>
+                                        <i class="fa-regular fa-star"></i>
+                                        <i class="fa-regular fa-star"></i>
+                                        <i class="fa-regular fa-star"></i>
+                                        <i class="fa-regular fa-star"></i>
+                                    </div>
 
-                                <div class="btnn">
-                                    <button id="button">Sumit Now</button>
+                                    <div class="btnn">
+                                        <button id="button">Submit Now</button>
+                                    </div>
                                 </div>
-                            </div>
-                        </form>
+                            </form>
+                        </div>
                     </div>
+
                 </div>
             </div>
 
@@ -65,93 +69,126 @@
 
 <script>
 
+    // DOM Elements
+    let name = document.getElementById("name");
+    let writeReview = document.getElementById("Reviews");
+    let btn = document.getElementById("button");
+    let showReview = document.getElementById("show-review");
+    let stars = document.querySelectorAll(".input-star i");
 
-    let name = document.getElementById("name")
-    let writeReview = document.getElementById("Reviews")
-    let btn = document.getElementById("button")
-    let showReview = document.getElementById("show-review")
-    let stars = document.querySelectorAll(".input-star i")
-    // console.log(stars);
+    let selectRating = 0; // Store selected rating
 
-    let selectRating = 0; // Selected rating store karne ke liye
-
+    // Star Rating Selection
     stars.forEach((el, index) => {
         el.addEventListener("click", () => {
-
-
             if (el.classList.contains("fa-solid")) {
-                stars.forEach((elev) => {
-                    elev.style.color = "";
-                    elev.classList.remove("fa-solid");
+                stars.forEach((star) => {
+                    star.style.color = "";
+                    star.classList.remove("fa-solid");
                 });
-                selectRating = 0; // Reset rating
+                selectRating = 0;
                 return;
             }
 
-
-            // Pehle sab stars ko reset karo
-            stars.forEach((elev) => {
-                elev.style.color = "";
-                elev.classList.remove("fa-solid");
+            // Reset all stars
+            stars.forEach((star) => {
+                star.style.color = "";
+                star.classList.remove("fa-solid");
             });
 
-            //  Ab selected stars ko fill karo
+            // Fill selected stars
             for (let i = 0; i <= index; i++) {
                 stars[i].classList.add("fa-solid");
                 stars[i].style.color = "gold";
             }
 
-            selectRating = index + 1; // Selected rating store kar lo
+            selectRating = index + 1;
         });
     });
 
-    btn.addEventListener("click", (e) => {
-        e.preventDefault()
-        const nameVal = name.value
-        const writeVal = writeReview.value
+    // Load reviews from localStorage on page load
+    document.addEventListener("DOMContentLoaded", () => {
+        let savedReviews = JSON.parse(localStorage.getItem("reviews")) || [];
+        savedReviews.reverse().forEach((review) => {
+            displayReview(review);
+        });
+    });
 
-        if (nameVal === "" || writeReview === "" || selectRating === 0) {
-            alert("Please fill all fields and select a rating!")
-            return
+    // Handle Review Submission
+    btn.addEventListener("click", (e) => {
+        e.preventDefault();
+        const nameVal = name.value.trim();
+        const writeVal = writeReview.value.trim();
+
+        if (nameVal === "" || writeVal === "" || selectRating === 0) {
+            alert("Please fill all fields and select a rating!");
+            return;
+        }
+
+        let reviewData = {
+            name: nameVal,
+            review: writeVal,
+            rating: selectRating,
+            time: new Date().toISOString(), // Store current date & time
         };
 
-        const reviewName = document.createElement("h3")
-        reviewName.style.fontWeight = "600px"
-        const review = document.createElement("p")
-        review.setAttribute("class", "text")
+        // Save to localStorage
+        let savedReviews = JSON.parse(localStorage.getItem("reviews")) || [];
+        savedReviews.unshift(reviewData);
+        localStorage.setItem("reviews", JSON.stringify(savedReviews));
 
+        displayReview(reviewData);
 
+        // Reset input fields & rating
+        name.value = "";
+        writeReview.value = "";
+        selectRating = 0;
+
+        stars.forEach((el) => {
+            el.style.color = "";
+            el.classList.remove("fa-solid");
+        });
+    });
+
+    // Display Review Function
+    function displayReview(data) {
+        const reviewContainer = document.createElement("div");
+        reviewContainer.classList.add("review-box");
+
+        const reviewName = document.createElement("h3");
+        reviewName.style.fontWeight = "600";
+        reviewName.innerText = data.name;
+
+        const review = document.createElement("p");
+        review.setAttribute("class", "text");
+        review.innerText = data.review;
+
+        // Star Container
         const starContainer = document.createElement("div");
-        for (let i = 0; i < selectRating; i++) {
+        for (let i = 0; i < data.rating; i++) {
             const star = document.createElement("i");
             star.classList.add("fa-solid", "fa-star");
             star.style.color = "gold";
-            star.style.margin = "7px 9px 24px 0px";
+            star.style.margin = "7px 9px 7px 0px";
             star.style.gap = "8px";
             star.style.fontSize = "20px";
-
             starContainer.appendChild(star);
         }
 
+        // Format & Display Time
+        const reviewTime = document.createElement("p");
+        reviewTime.classList.add("review-time");
+        let date = new Date(data.time);
+        reviewTime.innerText = `Posted on: ${date.toLocaleString()}`;
 
-        reviewName.innerText = nameVal
-        review.innerText = writeVal
+        // Append Elements
+        reviewContainer.appendChild(reviewName);
+        reviewContainer.appendChild(review);
+        reviewContainer.appendChild(starContainer);
+        reviewContainer.appendChild(reviewTime);
 
-        showReview.appendChild(reviewName);
-        showReview.appendChild(review);
-        showReview.appendChild(starContainer)
-
-        name.value = ""
-        writeReview.value = ""
-        selectRating = 0
-
-        stars.forEach((el) => {
-            el.style.color = ""
-            el.classList.remove("fa-solid");
-        })
-
-    });
-
+        showReview.prepend(reviewContainer);
+    }
 
 
 

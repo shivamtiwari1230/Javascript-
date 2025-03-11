@@ -21,9 +21,6 @@ ShoppingCart.prototype.getTotalPrice = function(){
 
 
 
-
-
-
 // You need to implement the Library constructor function and its prototype methods
 
 function Library() {

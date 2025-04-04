@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dark mode</title>
+    <style>
+
+        *{
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+
+        body{
+            font-family: sans-serif;
+        }
+
+
+        .container{
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            padding: 40px;
+        }
+        .container button{
+            padding: 8px 14px;
+            cursor: pointer;
+            margin: 20px 10px;
+        }
+        .todo h1{
+            text-align: center;
+            padding-top: 20px;
+        }
+
+        .todo input{
+            padding: 8px;
+        }
+        .color{
+            color: white;
+        }
+
+
+    </style>
+</head>
+<body>
+    
+    <div class="container">
+        <h1 id="text">Dark Mode</h1>
+        <button id="dark-mode" >Click me!</button>
+
+        <div class="todo">
+            <h1>Todo App</h1>
+            <input type="text" name="todo" id="todo-input" placeholder="Enter your todo">
+            <button id="add-btn">Add</button>
+        </div>
+        <div>
+            <ul id="add-li">
+            </ul>
+        </div>
+    </div>
+</body>
+<script>
+
+    let addBtn = document.getElementById("add-btn");
+    let inputValue = document.getElementById("todo-input");
+    let addLi = document.getElementById("add-li")
+
+    addBtn.addEventListener("click",() => {
+        const value = inputValue.value
+
+      const li =  document.createElement('li')
+      li.innerText = value
+
+      const removeBtn = document.createElement("button")
+      removeBtn.innerText = "X"
+      
+      removeBtn.addEventListener("click", () => {
+        li.remove()
+    });
+
+      addLi.appendChild(li)
+      inputValue.value = ""
+
+      li.appendChild(removeBtn)
+
+      });
+
+
+
+
+    function darkMode (color){
+        document.body.style.backgroundColor = color;
+    }
+
+    let themebtn = document.getElementById('dark-mode');
+    let heading = document.getElementById('text');
+    let body = document.querySelector('body');
+
+
+
+    themebtn.addEventListener("click", () => {
+        const currentColor = document.body.style.backgroundColor
+
+        if(!currentColor || currentColor == "white"){
+            darkMode("black")
+            body.classList.add("color")
+
+        }else if(currentColor == "white"){
+            body.classList.add("color-bl")
+        }
+        else{
+            darkMode("white")
+            body.classList.remove("color")
+        }
+    })
+
+
+
+
+
+</script>
+</html>

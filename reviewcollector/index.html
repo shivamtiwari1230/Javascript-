@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Share Your Experience on Cohort</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" />
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <div class="container padding-tb">
+        <div class="row">
+            <div class="col-md-6 wrap">
+                <div class="background">
+                    
+                    <h1 class="align-center">Share Your Experience on Cohort</h1>
+                    <p>Please rate your learning experience in the Cohort batch and leave a review. Your feedback helps us.</p>
+
+                    <div class="shad">
+                        <div class="review-form">
+                            <form action="#">
+                                <div class="text-area">
+                                    <div class="input">
+                                        <label for="Name">Your Name</label>
+                                        <input type="text" id="name" placeholder="Enter Your Name" required>
+                                    </div>
+
+                                    <div class="input">
+                                        <label for="Name">Write Your Review</label>
+                                        <textarea name="name" id="Reviews" required></textarea>
+                                    </div>
+
+                                    <div class="input-star">
+                                        <i class="fa-regular fa-star"></i>
+                                        <i class="fa-regular fa-star"></i>
+                                        <i class="fa-regular fa-star"></i>
+                                        <i class="fa-regular fa-star"></i>
+                                        <i class="fa-regular fa-star"></i>
+                                    </div>
+
+                                    <div class="btnn">
+                                        <button id="button">Submit Now</button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="col-md-6 wrap">
+                <div class="background">
+                    <h1>Student Reviews</h1>
+                    <p>Read what others have to say about their learning journey in the Cohort batch.</p>
+                    <div id="show-review">
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+<script>
+
+    // DOM Elements
+    let name = document.getElementById("name");
+    let writeReview = document.getElementById("Reviews");
+    let btn = document.getElementById("button");
+    let showReview = document.getElementById("show-review");
+    let stars = document.querySelectorAll(".input-star i");
+
+    let selectRating = 0; // Store selected rating
+
+    // Star Rating Selection
+    stars.forEach((el, index) => {
+        el.addEventListener("click", () => {
+            if (el.classList.contains("fa-solid")) {
+                stars.forEach((star) => {
+                    star.style.color = "";
+                    star.classList.remove("fa-solid");
+                });
+                selectRating = 0;
+                return;
+            }
+
+            // Reset all stars
+            stars.forEach((star) => {
+                star.style.color = "";
+                star.classList.remove("fa-solid");
+            });
+
+            // Fill selected stars
+            for (let i = 0; i <= index; i++) {
+                stars[i].classList.add("fa-solid");
+                stars[i].style.color = "gold";
+            }
+
+            selectRating = index + 1;
+        });
+    });
+
+    // Load reviews from localStorage on page load
+    document.addEventListener("DOMContentLoaded", () => {
+        let savedReviews = JSON.parse(localStorage.getItem("reviews")) || [];
+        savedReviews.reverse().forEach((review) => {
+            displayReview(review);
+        });
+    });
+
+    // Handle Review Submission
+    btn.addEventListener("click", (e) => {
+        e.preventDefault();
+        const nameVal = name.value.trim();
+        const writeVal = writeReview.value.trim();
+
+        if (nameVal === "" || writeVal === "" || selectRating === 0) {
+            alert("Please fill all fields and select a rating!");
+            return;
+        }
+
+        let reviewData = {
+            name: nameVal,
+            review: writeVal,
+            rating: selectRating,
+            time: new Date().toISOString(), // Store current date & time
+        };
+
+        // Save to localStorage
+        let savedReviews = JSON.parse(localStorage.getItem("reviews")) || [];
+        savedReviews.unshift(reviewData);
+        localStorage.setItem("reviews", JSON.stringify(savedReviews));
+
+        displayReview(reviewData);
+
+        // Reset input fields & rating
+        name.value = "";
+        writeReview.value = "";
+        selectRating = 0;
+
+        stars.forEach((el) => {
+            el.style.color = "";
+            el.classList.remove("fa-solid");
+        });
+    });
+
+    // Display Review Function
+    function displayReview(data) {
+        const reviewContainer = document.createElement("div");
+        reviewContainer.classList.add("review-box");
+
+        const reviewName = document.createElement("h3");
+        reviewName.style.fontWeight = "700";
+        reviewName.style.fontSize = "22px";
+        reviewName.innerText = data.name;
+
+        const review = document.createElement("p");
+        review.setAttribute("class", "text");
+        review.innerText = data.review;
+
+        // Star Container
+        const starContainer = document.createElement("div");
+        for (let i = 0; i < data.rating; i++) {
+            const star = document.createElement("i");
+            star.classList.add("fa-solid", "fa-star");
+            star.style.color = "gold";
+            star.style.margin = "7px 9px 7px 0px";
+            star.style.gap = "8px";
+            star.style.fontSize = "20px";
+            starContainer.appendChild(star);
+        }
+
+        // Format & Display Time
+        const reviewTime = document.createElement("p");
+        reviewTime.classList.add("review-time");
+        let date = new Date(data.time);
+        reviewTime.innerText = `Posted on: ${date.toLocaleString()}`;
+
+        // Append Elements
+        reviewContainer.appendChild(reviewName);
+        reviewContainer.appendChild(review);
+        reviewContainer.appendChild(starContainer);
+        reviewContainer.appendChild(reviewTime);
+
+        showReview.prepend(reviewContainer);
+    }
+
+
+
+</script>
+
+</html>

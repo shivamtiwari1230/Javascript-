@@ -5,8 +5,8 @@ function printMessage() {
 function executeCallback(cb) {
   cb(); // Yahan jo function pass hoga, use call kar diya
 }
-
 executeCallback(printMessage);
+
 
 function add(a, b) {
   return a + b;

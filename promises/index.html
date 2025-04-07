@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Promises</title>
+</head>
+
+<body>
+    <div class="container">
+        <ul id="items">
+        </ul>
+    </div>
+</body>
+<script>
+
+    const items = document.getElementById("items");
+
+    function renderToScreen(obj) {
+        const product = obj.data.data;
+        product.forEach(element => {
+            let li = document.createElement("li")
+            li.innerText = element.title
+            items.appendChild(li)
+        });
+    }
+
+    fetch("https://api.freeapi.app/api/v1/public/randomproducts")
+        .then((response) => response.json())
+
+        .then(renderToScreen)
+
+        .catch((error) => {
+            console.log("Something went wrong:", error);
+        });
+
+</script>
+</html>

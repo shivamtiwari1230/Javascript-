@@ -24,8 +24,6 @@ const myPromise = new Promise((resolve, reject) => {
 
 
 
-  
-
 const myPromise1 = new Promise((resolve, reject) => {
     setInterval(() => {
         reject("fullfilled")

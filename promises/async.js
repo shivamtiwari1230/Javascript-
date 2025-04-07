@@ -1,5 +1,4 @@
 
-
 async function myFn(){
     
     let promise = new Promise ((resolve, reject) => {
@@ -9,7 +8,7 @@ async function myFn(){
     })
 
     let result = await promise
-    console.log(result);
+    console.log(result);    
     
 }
 myFn()

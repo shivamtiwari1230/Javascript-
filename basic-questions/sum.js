@@ -1,4 +1,4 @@
-let myArray =[1,2,3,4,5,6]
+let myArray = [1,2,3,4,5,6]
 
 function sumNumbers(numbers){
     let sum = 0;
@@ -11,3 +11,4 @@ function sumNumbers(numbers){
  let result = sumNumbers(myArray)
  console.log(result);
  
+

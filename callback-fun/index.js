@@ -3,7 +3,7 @@ function printMessage() {
 }
 
 function executeCallback(cb) {
-  cb(); // Yahan jo function pass hoga, use call kar diya
+  return cb(); // Yahan jo function pass hoga, use call kar diya
 }
 executeCallback(printMessage);
 
@@ -34,3 +34,14 @@ function myFn(callback) {
 console.log(myFn(square));
 
 
+
+
+
+const square1 = (num) => num * num;
+
+function myFn1(callback) {
+ return callback(2)
+   
+}
+
+console.log(myFn1(square1));

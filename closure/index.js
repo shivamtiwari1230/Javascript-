@@ -53,4 +53,8 @@ function createCounter() {
 const myCounter = createCounter();
 console.log(myCounter.increment());
 console.log(myCounter.decrement());
+console.log(myCounter.count);
+
+
+
 

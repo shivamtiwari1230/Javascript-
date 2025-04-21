@@ -29,3 +29,33 @@ class Person {
 
 const p1 = new Person ('Aman', 'Gupta', '989898')
 p1.getName()
+
+
+
+
+const p2 = {
+    fname: "Piyush",
+    lname: "Garg",
+    getFullname(){
+        return`${this.fname} ${this.lname}`
+    },
+};
+
+const p3 = Object.create(p1);
+
+console.log(p2);
+console.log(p3.fname);
+
+
+class Person1 {
+    constructor(name, age){
+        this.name = name;
+        this.age = age;
+    }
+}
+Person1.prototype.greet = function () {
+    return `Hello, My name is ${this.name}`
+};
+
+const user  = new Person1("Aman", 21);
+console.log(user.greet());

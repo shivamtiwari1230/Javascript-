@@ -7,6 +7,34 @@ const obj = {
 setTimeout(obj.greet, 5 * 1000); // Output Undefined
 
 
+//--------------------------------------------------------------------------------
+
+
+// let obj2 = {
+//     name: "JS",
+//     getName: function () {
+//       return this.name;
+//     },
+//   };
+  
+//   let getName = obj.getName;
+//   getName()
+
+
+let obj2 = {
+    name: "JS",
+    getName: function () {
+      console.log(this.name);
+      
+    },
+  };
+  
+  obj2.getName()
+
+
+  //-------------------------------------------------------------------------------
+
+
 const obj1 = {
     name: "Akash",
     greet: function(){

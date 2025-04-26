@@ -7,6 +7,8 @@ setTimeout(() => {
 
 console.log("End of script");
 
+
+
 console.log("Start of script 3");
 
 setTimeout(() => {

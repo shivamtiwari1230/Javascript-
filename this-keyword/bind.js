@@ -10,18 +10,22 @@ setTimeout(obj.greet, 5 * 1000); // Output Undefined
 //--------------------------------------------------------------------------------
 
 
-// let obj2 = {
-//     name: "JS",
-//     getName: function () {
-//       return this.name;
-//     },
-//   };
-  
-//   let getName = obj.getName;
-//   getName()
-
-
 let obj2 = {
+    name: "JS",
+    getName: function () {
+      return this.name;
+    },
+  };
+  
+  let getName = obj2.getName;
+  getName() // Output Undefined
+
+
+  //----------------------------------------------------------------------------------
+
+
+
+let obj3 = {
     name: "JS",
     getName: function () {
       console.log(this.name);
@@ -29,7 +33,7 @@ let obj2 = {
     },
   };
   
-  obj2.getName()
+  obj3.getName() // Output JS
 
 
   //-------------------------------------------------------------------------------
